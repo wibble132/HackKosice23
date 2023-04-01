@@ -137,7 +137,7 @@ void task3() {
 					my_col = make_colour(50, 50, 50);
 				}
 
-				if(0 <= my_x && my_x <= WIDTH) {
+				else if(0 <= my_x && my_x <= WIDTH) {
 					my_col = make_colour(14 - 2 * my_x, 2 * my_x, 0);
 				}
 				else if(WIDTH + 1 <= my_x && my_x <= 2 * (WIDTH+1)) {
