@@ -82,26 +82,17 @@ void task2() {
 						setLED(&LED1202Obj, x, y, bright_white);
 					}
 					else {
+						Colour myCol;
 						uint8_t t_off = (t - y) % 24;
-						uint8_t r = 0;
-						uint8_t g = 0;
-						uint8_t b = 0;
 						if (t_off < 8) {
-							r = 8 - t_off;
-							g = t_off;
-							b = 0;
+							myCol = make_colour(8 - t_off, t_off, 0);
 						}
 						else if (t_off < 16) {
-							r = 0;
-							g = 16 - t_off;
-							b = t_off - 8;
+							myCol = make_colour(0, 16 - t_off, t_off - 8);
 						}
 						else {
-							r = t_off - 16;
-							g = 0;
-							b = 24 - t_off;
+							myCol = make_colour(t_off - 16, 0, 24 - t_off);
 						}
-						Colour myCol = make_colour(r, g, b);
 						setLED(&LED1202Obj, x, y, myCol);
 					}
 				}
