@@ -14,6 +14,7 @@ RM := rm -rf
 -include Drivers/BSP/Components/led1202/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Application/Src/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

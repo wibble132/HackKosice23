@@ -1,7 +1,25 @@
 
+#include "mainApp.h"
+
+#include "stm32g0xx_hal.h"
+#include <callbacks.h>
+#include <stdbool.h>
+#include "led12a1.h"
+#include <bridge.h>
+#include <callbacks.h>
+#include <stdbool.h>
+#include "led1202.h"
+#include "led12a1.h"
 
 
-void setup() {
+void mainApp_setup() {
+
+#ifndef GUI_MODE
+  uint16_t  digCurrReg = 0;
+  uint8_t dev = 0;
+  uint8_t cnt;
+#endif
+
   __HAL_TIM_CLEAR_IT(&htim2,TIM_SR_UIF);
   __HAL_TIM_CLEAR_IT(&htim3,TIM_SR_UIF);
 
@@ -32,7 +50,7 @@ void setup() {
 
 }
 
-void mainLoop() {
+void mainApp_mainLoop() {
 #ifdef GUI_MODE
     WaitForCommand();
 #else

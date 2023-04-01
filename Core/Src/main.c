@@ -89,11 +89,7 @@ static void MX_TIM3_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-#ifndef GUI_MODE
-  uint16_t  digCurrReg = 0;
-  uint8_t dev = 0;
-  uint8_t cnt;
-#endif
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

@@ -23,6 +23,7 @@ OBJCOPY_BIN :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Application/Src \
 Core/Src \
 Core/Startup \
 Drivers/BSP/Components/led1202 \
