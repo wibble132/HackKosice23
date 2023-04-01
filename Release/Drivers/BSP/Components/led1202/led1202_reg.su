@@ -1,0 +1,2 @@
+../Drivers/BSP/Components/led1202/led1202_reg.c:36:9:LED1202_ReadReg	8	static
+../Drivers/BSP/Components/led1202/led1202_reg.c:54:9:LED1202_WriteReg	8	static

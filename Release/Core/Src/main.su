@@ -1,0 +1,4 @@
+../Core/Src/main.c:232:6:SystemClock_Config	88	static,ignoring_inline_asm
+../Core/Src/main.c:273:6:MX_I2C1_Init	8	static,ignoring_inline_asm
+../Core/Src/main.c:87:5:main	88	static,ignoring_inline_asm
+../Core/Src/main.c:493:6:Error_Handler	0	static,ignoring_inline_asm
