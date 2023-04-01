@@ -49,7 +49,7 @@ void setup() {
 }
 
 void mainLoop() {
-	task1();
+	task2();
 }
 
 void task2() {
@@ -130,7 +130,7 @@ void task1() {
 				myCol = make_colour(0, 20-t, t-10);
 			}
 			else {
-				myCol = make_colour(0, 20-t, t-10);
+				myCol = make_colour(t-20, 0, 30-t);
 			}
 			for (uint8_t x = 0; x < 4; ++x) {
 				for (uint8_t y = 0; y < 4; ++y) {
