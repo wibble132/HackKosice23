@@ -49,6 +49,10 @@ void setup() {
 }
 
 void mainLoop() {
+	task1_mainLoop();
+}
+
+void task2_mainLoop() {
 
 	// initialise LEDs as all red
 	disableAllLED( &LED1202Obj, NumOfDev );
@@ -69,32 +73,33 @@ void mainLoop() {
 			for (uint8_t x = 0; x < 4; ++x) {
 				for (uint8_t y = 0; y < 4; ++y) {
 					if (!enabled_flag) {
-						enableLED(&LED1202Obj, y, x);
+						enableLED(&LED1202Obj, x, y);
 //						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
 //						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
 //						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
 					}
 					if ((letters_buffer[t - y] >> x) & 1) {
-						setLED(&LED1202Obj, y, x, bright_white);
+						setLED(&LED1202Obj, x, y, bright_white);
 					}
 					else {
+						uint8_t t_off = (t - y) % 24;
 						uint8_t r = 0;
 						uint8_t g = 0;
 						uint8_t b = 0;
-						if (t - 3 < 8) {
-							r = 11 - t;
-							g = t - 3;
+						if (t_off < 8) {
+							r = 8 - t_off;
+							g = t_off;
 							b = 0;
 						}
-						else if (t - 3 < 16) {
+						else if (t_off < 16) {
 							r = 0;
-							g = 19 - t;
-							b = t - 11;
+							g = 16 - t_off;
+							b = t_off - 8;
 						}
 						else {
-							r = t - 19;
+							r = t_off - 16;
 							g = 0;
-							b = 27 - t;
+							b = 24 - t_off;
 						}
 						Colour myCol = make_colour(r, g, b);
 						setLED(&LED1202Obj, x, y, myCol);
