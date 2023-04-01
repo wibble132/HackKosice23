@@ -57,23 +57,11 @@ void mainLoop() {
 
 	for (uint8_t x = 0; x < 4; ++x) {
 		for (uint8_t y = 0; y < 4; ++y) {
-			/*
-			 * Enable all the channels
-			 */
 
-			uint8_t dev = y;
-
-			for (int i = 0; i < 3; i++) {
-				uint8_t channel = 3*x + i;
-
-				LED12A1_ChannelEnable(
-					&LED1202Obj,
-					(TypeDefChannel) (LED_CHANNEL_0 << channel),
-					(TypedefEnumDevAddr)(LED_DEVICE1 + dev)
-				);
-			}
+			enableLED(&LED1202Obj, x, y);
 
 			setLED( &LED1202Obj, x, y, white);
+
 			HAL_Delay(1000);
 		}
 	}

@@ -5,9 +5,30 @@
 
 #include "datatypes.h"
 
-void setLED(LED1202_Object_TypeDef *LED1202Obj, uint8_t x, uint8_t y, Colour col) {
+void enableLED(LED1202_Object_TypeDef *obj, uint8_t x, uint8_t y) {
+	/*
+	 * Utility function to enable an LED.
+	 */
+	uint8_t dev = x;
 
-	uint8_t dev = y;
+	for (uint8_t i = 0; i < 3; i++) {
+		uint8_t channel = 3*(3-y) + i;
+
+		LED12A1_ChannelEnable(
+			obj,
+			(TypeDefChannel) (LED_CHANNEL_0 << channel),
+			(TypedefEnumDevAddr)(LED_DEVICE1 + dev)
+		);
+	}
+
+}
+
+void setLED(LED1202_Object_TypeDef *LED1202Obj, uint8_t x, uint8_t y, Colour col) {
+	/*
+	 * Utility function to set the colour of an LED.
+	 */
+
+	uint8_t dev = x;
 	uint16_t colours[3] = {
 		col.Red,
 		col.Green,
@@ -15,7 +36,8 @@ void setLED(LED1202_Object_TypeDef *LED1202Obj, uint8_t x, uint8_t y, Colour col
 	};
 
 	for (uint8_t i=0; i<3; i++) {
-		uint8_t channel_col = x * 3 + i;
+		uint8_t channel_col = 3*(3-y) + i;
+
 		LED12A1_DigitalDimming(
 			LED1202Obj,
 			&colours[i],

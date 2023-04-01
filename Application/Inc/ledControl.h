@@ -6,6 +6,8 @@
 
 #include "datatypes.h"
 
+void enableLED(LED1202_Object_TypeDef *obj, uint8_t x, uint8_t y);
+
 void setLED(LED1202_Object_TypeDef* LED1202Obj, uint8_t x, uint8_t y, Colour col);
 
 void disableAllLED(LED1202_Object_TypeDef* LED1202Obj, uint8_t NumOfDev);
