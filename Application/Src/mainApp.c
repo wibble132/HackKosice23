@@ -117,6 +117,115 @@ void task4() {
 }
 }
 
+void task3() {
+
+	const int HEIGHT = 6;
+	const int WIDTH = 4;
+
+	const int h = 24;
+	const int period = 8;
+	const int str_bsh[24][4] = {
+		/*
+		 * Start padding
+		 */
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		/*
+		 * Character b
+		 */
+		{1, 0, 0, 0},
+		{1, 0, 0, 0},
+		{1, 0, 0, 0},
+		{1, 1, 1, 0},
+		{1, 0, 0, 1},
+		{1, 1, 1, 0},
+
+		{0, 0, 0, 0},
+		/*
+		 * Character S
+		 */
+		{0, 1, 1, 0},
+		{1, 0, 0, 1},
+		{0, 1, 0, 0},
+		{0, 0, 1, 0},
+		{1, 0, 0, 1},
+		{0, 1, 1, 0},
+
+		{0, 0, 0, 0},
+		/*
+		 * Character h
+		 */
+		{1, 0, 0, 0},
+		{1, 0, 0, 1},
+		{1, 0, 0, 0},
+		{1, 1, 1, 0},
+		{1, 0, 0, 1},
+		{1, 0, 0, 1}
+	};
+
+
+
+	// enable the motion sensor
+	IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO);
+	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
+
+	int curr = 0; // where we are
+
+	while(true) {
+		IKS01A3_MOTION_SENSOR_Axes_t angular;
+		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &angular);
+
+		double gyro_x = angular.x / 1e4; // normalise the gyro data
+
+
+		// Cut off gyro_x at the bounds
+		if(gyro_x > 100)
+			gyro_x = 100;
+		if(gyro_x < -100)
+			gyro_x = -100;
+
+		// Set threshold for tilt
+		const double my_threshold = 30 * 100 / 180; // 30 degree threshold
+
+		if(gyro_x > my_threshold) {
+			curr = (curr + 1) % h;
+		}
+		else if(gyro_x < -my_threshold) {
+			curr = (curr - 1 + h) % h;
+		}
+
+		// display the letters on the screen
+		for(int x = 0; x < WIDTH; x++) {
+			for(int y = 0; y < WIDTH; y++) {
+				int my_x = (x + curr) % h;
+				enableLED(&LED1202Obj, my_x, y);
+				Colour my_col;
+
+				if(str_bsh[my_x][y] == 1) {
+					// We colour this white
+					my_col = make_colour(50, 50, 50);
+				}
+
+				else if(0 <= my_x && my_x < period) {
+					my_col = make_colour(2 * (period - my_x), 2 * my_x, 0);
+				}
+				else if(period <= my_x && my_x <= 2 * period) {
+					my_col = make_colour(0, 4 * period - 2 * my_x, 2 * (my_x - period));
+				}
+				else if(2 * period <= my_x && my_x < 3 * period) {
+					my_col = make_colour(2 * my_x - 4 * period, 0, 6 * period - 2 * my_x);
+				}
+
+				setLED(&LED1202Obj, x, y, my_col);
+			}
+		}
+
+		HAL_Delay(200); // set the delay
+	}
+}
+
 
 void task3() {
 
