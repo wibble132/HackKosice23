@@ -1,2 +1,3 @@
-../Application/Src/mainApp.c:24:6:setup	16	static
-../Application/Src/mainApp.c:53:6:mainLoop	24	static
+../Application/Src/mainApp.c:27:6:setup	16	static
+../Application/Src/mainApp.c:51:6:mainLoop	24	static
+../Application/Src/mainApp.c:72:6:old_mainLoop	24	static

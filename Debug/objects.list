@@ -1,3 +1,4 @@
+"./Application/Src/ledControl.o"
 "./Application/Src/mainApp.o"
 "./Core/Src/bridge.o"
 "./Core/Src/main.o"

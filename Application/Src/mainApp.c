@@ -50,28 +50,30 @@ void setup() {
 
 void mainLoop() {
 
-//	disableAllLED( &LED1202Obj, NumOfDev );
-//
-//	for (uint8_t x = 0; x < 4; ++x) {
-//		for (uint8_t y = 0; y < 4; ++y) {
-//			LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL<<1));
-//			setLED( &LED1202Obj, x, y, 10, 10, 10);
-//			HAL_Delay(100);
-//		}
-//	}
-//
-//	for (uint8_t x = 0; x < 4; ++x) {
-//		for (uint8_t y = 0; y < 4; ++y) {
-//			setLED( &LED1202Obj, x, y, 10, 10, 10);
-//			HAL_Delay(100);
-//		}
-//	}
+	disableAllLED( &LED1202Obj, NumOfDev );
+
+	for (uint8_t x = 0; x < 4; ++x) {
+		for (uint8_t y = 0; y < 4; ++y) {
+			LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+			LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+			LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+			setLED( &LED1202Obj, x, y, 10, 10, 10);
+			HAL_Delay(1000);
+		}
+	}
+
+	for (uint8_t x = 0; x < 4; ++x) {
+		for (uint8_t y = 0; y < 4; ++y) {
+			setLED( &LED1202Obj, x, y, 0, 0, 0);
+			HAL_Delay(1000);
+		}
+	}
 
 }
 
 void old_mainLoop() {
 
-  uint16_t  digCurrReg = 0;
+  uint16_t digCurrReg = 0;
   uint8_t dev = 0;
   uint8_t cnt;
 

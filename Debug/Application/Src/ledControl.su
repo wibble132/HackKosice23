@@ -1,0 +1,2 @@
+../Application/Src/ledControl.c:7:6:setLED	48	static
+../Application/Src/ledControl.c:19:6:disableAllLED	32	static
