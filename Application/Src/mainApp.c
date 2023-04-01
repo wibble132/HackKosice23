@@ -53,6 +53,71 @@ void mainLoop() {
 	task3();
 }
 
+void task4() {
+	// enable the motion sensor
+	IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO);
+	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
+
+	disableAllLED( &LED1202Obj, NumOfDev );
+	const int letters_buffer[27] =  {0, 0, 0, 0, 7, 9, 7, 1, 1, 1, 0, 6, 9, 4, 2, 9, 6, 0, 9, 9, 7, 1, 1, 1, 0, 0, 0};
+//	const bool device3_buffer[27] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0};
+//	const bool device2_buffer[27] = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
+//	const bool device1_buffer[27] = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
+//	const bool device0_buffer[27] = {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
+
+	bool enabled_flag = false;
+
+	while(1) {
+		IKS01A3_MOTION_SENSOR_Axes_t angular;
+		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &angular);
+		double lum_factor = (double)angular.y/(180 * 1e4);
+
+
+		uint16_t white_factor = (uint16_t)(50 * lum_factor);
+		const Colour bright_white = make_colour(white_factor, white_factor, white_factor);
+	//	const Colour black = make_colour(0, 0, 0);
+
+
+		uint8_t t = 3;
+		while (t < 27) {
+			for (uint8_t x = 0; x < 4; ++x) {
+				for (uint8_t y = 0; y < 4; ++y) {
+					if (!enabled_flag) {
+						enableLED(&LED1202Obj, x, y);
+//						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+//						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+//						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+					}
+					if ((letters_buffer[t - y] >> x) & 1) {
+						setLED(&LED1202Obj, x, y, bright_white);
+					}
+					else {
+						Colour myCol;
+						uint8_t t_off = (t - y) % 24;
+						if (t_off < 8) {
+							myCol = make_colour((uint16_t)(lum_factor * (8 - t_off)), (uint16_t)(lum_factor * t_off), 0);
+						}
+						else if (t_off < 16) {
+							myCol = make_colour(0, (uint16_t)(lum_factor * (16 - t_off)), (uint16_t)(lum_factor * (t_off - 8)));
+						}
+						else {
+							myCol = make_colour((uint16_t)(lum_factor * (t_off - 16)), 0, (uint16_t)(lum_factor * (24 - t_off)));
+						}
+						setLED(&LED1202Obj, x, y, myCol);
+					}
+				}
+			}
+			if (!enabled_flag) {
+				enabled_flag = true;
+			}
+			HAL_Delay(200);
+			t++;
+		}
+	}
+}
+}
+
+
 void task3() {
 
 	const int HEIGHT = 6;
