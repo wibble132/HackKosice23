@@ -121,33 +121,19 @@ void task1_mainLoop() {
 	while(1) {
 		uint8_t t = 0;
 
-		while (t < 10) { // (10, 0, 0) -> (0, 10, 0)
-			for (uint8_t x = 0; x < 4; ++x) {
-				for (uint8_t y = 0; y < 4; ++y) {
-					enableLED(&LED1202Obj, x, y);
-					Colour myCol = make_colour(10-t, t, 0);
-					setLED(&LED1202Obj, x, y, myCol);
-				}
+		while (t < 30) { // (10, 0, 0) -> (0, 10, 0)
+			if (t < 10) {
+				Colour myCol = make_colour(10-t, t, 0);
 			}
-			HAL_Delay(20);
-			t++;
-		}
-		while (t < 20) { // (0, 10, 0) -> (0, 0, 10)
-			for (uint8_t x = 0; x < 4; ++x) {
-				for (uint8_t y = 0; y < 4; ++y) {
-					enableLED(&LED1202Obj, x, y);
-					Colour myCol = make_colour(0, 20-t, t-10);
-					setLED(&LED1202Obj, x, y, myCol);
-				}
+			else if (t < 20) {
+				Colour myCol = make_colour(0, 20-t, t-10);
 			}
-			HAL_Delay(20);
-			t++;
-		}
-		while (t < 30) { // (0, 0, 10) -> (10, 0, 0)
+			else {
+				Colour myCol = make_colour(0, 20-t, t-10);
+			}
 			for (uint8_t x = 0; x < 4; ++x) {
 				for (uint8_t y = 0; y < 4; ++y) {
 					enableLED(&LED1202Obj, x, y);
-					Colour myCol = make_colour(t-20, 0, 30-t);
 					setLED(&LED1202Obj, x, y, myCol);
 				}
 			}

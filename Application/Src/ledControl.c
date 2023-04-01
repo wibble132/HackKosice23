@@ -28,7 +28,7 @@ void setLED(LED1202_Object_TypeDef *LED1202Obj, uint8_t x, uint8_t y, Colour col
 	 * Utility function to set the colour of an LED.
 	 */
 
-	uint8_t dev = x;
+	uint8_t dev = y;
 	uint16_t colours[3] = {
 		col.Red,
 		col.Green,
@@ -36,7 +36,7 @@ void setLED(LED1202_Object_TypeDef *LED1202Obj, uint8_t x, uint8_t y, Colour col
 	};
 
 	for (uint8_t i=0; i<3; i++) {
-		uint8_t channel_col = 3*(3-y) + i;
+		uint8_t channel_col = 3*(3-x) + i;
 
 		LED12A1_DigitalDimming(
 			LED1202Obj,
