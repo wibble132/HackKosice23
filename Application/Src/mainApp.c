@@ -49,10 +49,10 @@ void setup() {
 }
 
 void mainLoop() {
-	task1_mainLoop();
+	task1();
 }
 
-void task2_mainLoop() {
+void task2() {
 
 	// initialise LEDs as all red
 	disableAllLED( &LED1202Obj, NumOfDev );
@@ -116,20 +116,21 @@ void task2_mainLoop() {
 }
 
 
-void task1_mainLoop() {
+void task1() {
 
 	while(1) {
 		uint8_t t = 0;
+		Colour myCol;
 
 		while (t < 30) { // (10, 0, 0) -> (0, 10, 0)
 			if (t < 10) {
-				Colour myCol = make_colour(10-t, t, 0);
+				myCol = make_colour(10-t, t, 0);
 			}
 			else if (t < 20) {
-				Colour myCol = make_colour(0, 20-t, t-10);
+				myCol = make_colour(0, 20-t, t-10);
 			}
 			else {
-				Colour myCol = make_colour(0, 20-t, t-10);
+				myCol = make_colour(0, 20-t, t-10);
 			}
 			for (uint8_t x = 0; x < 4; ++x) {
 				for (uint8_t y = 0; y < 4; ++y) {
