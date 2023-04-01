@@ -1,4 +1,5 @@
 "./Application/Src/MainApp.o"
+"./Application/Src/ledControl.o"
 "./Core/Src/bridge.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32g0xx_hal_msp.o"
