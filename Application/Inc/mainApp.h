@@ -6,4 +6,8 @@ void setup();
 
 void mainLoop();
 
+void task1();
+
+void task2();
+
 #endif
