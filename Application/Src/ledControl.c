@@ -3,17 +3,27 @@
 
 #include "led12a1.h"
 
+#include "datatypes.h"
 
-void setLED(LED1202_Object_TypeDef* LED1202Obj, uint8_t x, uint8_t y, uint16_t r, uint16_t g, uint16_t b) {
+void setLED(LED1202_Object_TypeDef *LED1202Obj, uint8_t x, uint8_t y, Colour col) {
 
 	uint8_t dev = y;
-	uint8_t channelr = x * 3;
-	uint8_t channelg = x * 3 + 1;
-	uint8_t channelb = x * 3 + 2;
+	uint16_t colours[3] = {
+		col.Red,
+		col.Green,
+		col.Blue
+	};
 
-	LED12A1_DigitalDimming(LED1202Obj, &r, channelr, 0, (TypedefEnumDevAddr)(LED_DEVICE1+dev));
-	LED12A1_DigitalDimming(LED1202Obj, &g, channelg, 0, (TypedefEnumDevAddr)(LED_DEVICE1+dev));
-	LED12A1_DigitalDimming(LED1202Obj, &b, channelb, 0, (TypedefEnumDevAddr)(LED_DEVICE1+dev));
+	for (uint8_t i=0; i<3; i++) {
+		uint8_t channel_col = x * 3 + i;
+		LED12A1_DigitalDimming(
+			LED1202Obj,
+			&colours[i],
+			channel_col,
+			0, // Pattern num, but we don't know what this is yet
+			(TypedefEnumDevAddr)(LED_DEVICE1 + dev)
+		);
+	}
 }
 
 void disableAllLED(LED1202_Object_TypeDef* LED1202Obj, uint8_t NumOfDev) {
