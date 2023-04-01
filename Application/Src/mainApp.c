@@ -21,7 +21,7 @@ extern  uint8_t bridge_OUT_buffer[];
 extern volatile uint8_t command_triggered;
 extern   LED1202_Object_TypeDef LED1202Obj;
 
-void mainApp_setup() {
+void setup() {
 
   /*Wait Time assuring a properly steady state condition */
   HAL_Delay(100);
@@ -50,7 +50,7 @@ void mainApp_setup() {
 
 }
 
-void mainApp_mainLoop() {
+void mainLoop() {
 
   uint16_t  digCurrReg = 0;
   uint8_t dev = 0;

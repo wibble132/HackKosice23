@@ -1,0 +1,2 @@
+../Application/Src/mainApp.c:24:6:setup	16	static
+../Application/Src/mainApp.c:53:6:mainLoop	24	static
