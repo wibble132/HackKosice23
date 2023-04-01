@@ -26,6 +26,7 @@
 #include "led12a1.h"
 #include "led12a1_conf.h"
 #include "bsp_ip_conf.h"
+#include "stm32g0xx_nucleo_bus.h"
 
 
 /** @addtogroup BSP BSP

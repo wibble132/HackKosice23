@@ -51,7 +51,6 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-void MX_I2C1_Init(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -73,6 +72,7 @@ void MX_I2C1_Init(void);
 
 /* USER CODE BEGIN Private defines */
 
+void MX_I2C1_Init(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

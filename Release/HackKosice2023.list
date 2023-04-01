@@ -523,11 +523,11 @@ Disassembly of section .text:
  8000472:	d02d      	beq.n	80004d0 <__udivmoddi4+0x78>
  8000474:	4649      	mov	r1, r9
  8000476:	4650      	mov	r0, sl
- 8000478:	f000 f8ba 	bl	80005f0 <__clzdi2>
+ 8000478:	f000 f8d8 	bl	800062c <__clzdi2>
  800047c:	0029      	movs	r1, r5
  800047e:	0006      	movs	r6, r0
  8000480:	0020      	movs	r0, r4
- 8000482:	f000 f8b5 	bl	80005f0 <__clzdi2>
+ 8000482:	f000 f8d3 	bl	800062c <__clzdi2>
  8000486:	1a33      	subs	r3, r6, r0
  8000488:	4698      	mov	r8, r3
  800048a:	3b20      	subs	r3, #32
@@ -710,44 +710,44 @@ Disassembly of section .text:
  80005ec:	e7cd      	b.n	800058a <__udivmoddi4+0x132>
  80005ee:	46c0      	nop			; (mov r8, r8)
 
-080005f0 <__clzdi2>:
- 80005f0:	b510      	push	{r4, lr}
- 80005f2:	2900      	cmp	r1, #0
- 80005f4:	d103      	bne.n	80005fe <__clzdi2+0xe>
- 80005f6:	f000 f807 	bl	8000608 <__clzsi2>
- 80005fa:	3020      	adds	r0, #32
- 80005fc:	e002      	b.n	8000604 <__clzdi2+0x14>
- 80005fe:	0008      	movs	r0, r1
- 8000600:	f000 f802 	bl	8000608 <__clzsi2>
- 8000604:	bd10      	pop	{r4, pc}
- 8000606:	46c0      	nop			; (mov r8, r8)
-
-08000608 <__clzsi2>:
- 8000608:	211c      	movs	r1, #28
- 800060a:	2301      	movs	r3, #1
- 800060c:	041b      	lsls	r3, r3, #16
- 800060e:	4298      	cmp	r0, r3
- 8000610:	d301      	bcc.n	8000616 <__clzsi2+0xe>
- 8000612:	0c00      	lsrs	r0, r0, #16
- 8000614:	3910      	subs	r1, #16
- 8000616:	0a1b      	lsrs	r3, r3, #8
- 8000618:	4298      	cmp	r0, r3
- 800061a:	d301      	bcc.n	8000620 <__clzsi2+0x18>
- 800061c:	0a00      	lsrs	r0, r0, #8
- 800061e:	3908      	subs	r1, #8
- 8000620:	091b      	lsrs	r3, r3, #4
- 8000622:	4298      	cmp	r0, r3
- 8000624:	d301      	bcc.n	800062a <__clzsi2+0x22>
- 8000626:	0900      	lsrs	r0, r0, #4
- 8000628:	3904      	subs	r1, #4
- 800062a:	a202      	add	r2, pc, #8	; (adr r2, 8000634 <__clzsi2+0x2c>)
- 800062c:	5c10      	ldrb	r0, [r2, r0]
- 800062e:	1840      	adds	r0, r0, r1
- 8000630:	4770      	bx	lr
- 8000632:	46c0      	nop			; (mov r8, r8)
- 8000634:	02020304 	.word	0x02020304
- 8000638:	01010101 	.word	0x01010101
+080005f0 <__clzsi2>:
+ 80005f0:	211c      	movs	r1, #28
+ 80005f2:	2301      	movs	r3, #1
+ 80005f4:	041b      	lsls	r3, r3, #16
+ 80005f6:	4298      	cmp	r0, r3
+ 80005f8:	d301      	bcc.n	80005fe <__clzsi2+0xe>
+ 80005fa:	0c00      	lsrs	r0, r0, #16
+ 80005fc:	3910      	subs	r1, #16
+ 80005fe:	0a1b      	lsrs	r3, r3, #8
+ 8000600:	4298      	cmp	r0, r3
+ 8000602:	d301      	bcc.n	8000608 <__clzsi2+0x18>
+ 8000604:	0a00      	lsrs	r0, r0, #8
+ 8000606:	3908      	subs	r1, #8
+ 8000608:	091b      	lsrs	r3, r3, #4
+ 800060a:	4298      	cmp	r0, r3
+ 800060c:	d301      	bcc.n	8000612 <__clzsi2+0x22>
+ 800060e:	0900      	lsrs	r0, r0, #4
+ 8000610:	3904      	subs	r1, #4
+ 8000612:	a202      	add	r2, pc, #8	; (adr r2, 800061c <__clzsi2+0x2c>)
+ 8000614:	5c10      	ldrb	r0, [r2, r0]
+ 8000616:	1840      	adds	r0, r0, r1
+ 8000618:	4770      	bx	lr
+ 800061a:	46c0      	nop			; (mov r8, r8)
+ 800061c:	02020304 	.word	0x02020304
+ 8000620:	01010101 	.word	0x01010101
 	...
+
+0800062c <__clzdi2>:
+ 800062c:	b510      	push	{r4, lr}
+ 800062e:	2900      	cmp	r1, #0
+ 8000630:	d103      	bne.n	800063a <__clzdi2+0xe>
+ 8000632:	f7ff ffdd 	bl	80005f0 <__clzsi2>
+ 8000636:	3020      	adds	r0, #32
+ 8000638:	e002      	b.n	8000640 <__clzdi2+0x14>
+ 800063a:	0008      	movs	r0, r1
+ 800063c:	f7ff ffd8 	bl	80005f0 <__clzsi2>
+ 8000640:	bd10      	pop	{r4, pc}
+ 8000642:	46c0      	nop			; (mov r8, r8)
 
 08000644 <setLED>:
  8000644:	b57f      	push	{r0, r1, r2, r3, r4, r5, r6, lr}
@@ -1113,91 +1113,91 @@ Disassembly of section .text:
  800095c:	d001      	beq.n	8000962 <main+0xd2>
  800095e:	b672      	cpsid	i
  8000960:	e7fe      	b.n	8000960 <main+0xd0>
- 8000962:	f7ff ff69 	bl	8000838 <MX_I2C1_Init>
- 8000966:	2210      	movs	r2, #16
- 8000968:	0029      	movs	r1, r5
- 800096a:	a807      	add	r0, sp, #28
- 800096c:	f002 fa04 	bl	8002d78 <memset>
- 8000970:	0032      	movs	r2, r6
- 8000972:	0029      	movs	r1, r5
- 8000974:	a804      	add	r0, sp, #16
- 8000976:	f002 f9ff 	bl	8002d78 <memset>
- 800097a:	2380      	movs	r3, #128	; 0x80
- 800097c:	4c31      	ldr	r4, [pc, #196]	; (8000a44 <main+0x1b4>)
- 800097e:	05db      	lsls	r3, r3, #23
- 8000980:	6023      	str	r3, [r4, #0]
- 8000982:	2301      	movs	r3, #1
- 8000984:	0020      	movs	r0, r4
- 8000986:	425b      	negs	r3, r3
- 8000988:	6065      	str	r5, [r4, #4]
- 800098a:	60a5      	str	r5, [r4, #8]
- 800098c:	60e3      	str	r3, [r4, #12]
- 800098e:	6125      	str	r5, [r4, #16]
- 8000990:	61a5      	str	r5, [r4, #24]
- 8000992:	f001 fd7f 	bl	8002494 <HAL_TIM_Base_Init>
- 8000996:	2800      	cmp	r0, #0
- 8000998:	d001      	beq.n	800099e <main+0x10e>
- 800099a:	b672      	cpsid	i
- 800099c:	e7fe      	b.n	800099c <main+0x10c>
- 800099e:	2780      	movs	r7, #128	; 0x80
- 80009a0:	0020      	movs	r0, r4
- 80009a2:	017f      	lsls	r7, r7, #5
- 80009a4:	a907      	add	r1, sp, #28
- 80009a6:	9707      	str	r7, [sp, #28]
- 80009a8:	f001 fdaa 	bl	8002500 <HAL_TIM_ConfigClockSource>
- 80009ac:	2800      	cmp	r0, #0
- 80009ae:	d001      	beq.n	80009b4 <main+0x124>
- 80009b0:	b672      	cpsid	i
- 80009b2:	e7fe      	b.n	80009b2 <main+0x122>
- 80009b4:	9004      	str	r0, [sp, #16]
- 80009b6:	9006      	str	r0, [sp, #24]
- 80009b8:	a904      	add	r1, sp, #16
- 80009ba:	0020      	movs	r0, r4
- 80009bc:	f001 fe44 	bl	8002648 <HAL_TIMEx_MasterConfigSynchronization>
- 80009c0:	1e05      	subs	r5, r0, #0
- 80009c2:	d001      	beq.n	80009c8 <main+0x138>
- 80009c4:	b672      	cpsid	i
- 80009c6:	e7fe      	b.n	80009c6 <main+0x136>
- 80009c8:	0001      	movs	r1, r0
- 80009ca:	2210      	movs	r2, #16
- 80009cc:	a807      	add	r0, sp, #28
- 80009ce:	f002 f9d3 	bl	8002d78 <memset>
- 80009d2:	0032      	movs	r2, r6
- 80009d4:	0029      	movs	r1, r5
- 80009d6:	a804      	add	r0, sp, #16
- 80009d8:	f002 f9ce 	bl	8002d78 <memset>
- 80009dc:	4e1a      	ldr	r6, [pc, #104]	; (8000a48 <main+0x1b8>)
- 80009de:	4b1b      	ldr	r3, [pc, #108]	; (8000a4c <main+0x1bc>)
- 80009e0:	0030      	movs	r0, r6
- 80009e2:	6033      	str	r3, [r6, #0]
- 80009e4:	4b1a      	ldr	r3, [pc, #104]	; (8000a50 <main+0x1c0>)
- 80009e6:	6075      	str	r5, [r6, #4]
- 80009e8:	60b5      	str	r5, [r6, #8]
- 80009ea:	60f3      	str	r3, [r6, #12]
- 80009ec:	6135      	str	r5, [r6, #16]
- 80009ee:	61b5      	str	r5, [r6, #24]
- 80009f0:	f001 fd50 	bl	8002494 <HAL_TIM_Base_Init>
- 80009f4:	2800      	cmp	r0, #0
- 80009f6:	d001      	beq.n	80009fc <main+0x16c>
- 80009f8:	b672      	cpsid	i
- 80009fa:	e7fe      	b.n	80009fa <main+0x16a>
- 80009fc:	0030      	movs	r0, r6
- 80009fe:	a907      	add	r1, sp, #28
- 8000a00:	9707      	str	r7, [sp, #28]
- 8000a02:	f001 fd7d 	bl	8002500 <HAL_TIM_ConfigClockSource>
- 8000a06:	2800      	cmp	r0, #0
- 8000a08:	d001      	beq.n	8000a0e <main+0x17e>
- 8000a0a:	b672      	cpsid	i
- 8000a0c:	e7fe      	b.n	8000a0c <main+0x17c>
- 8000a0e:	9004      	str	r0, [sp, #16]
- 8000a10:	9006      	str	r0, [sp, #24]
- 8000a12:	a904      	add	r1, sp, #16
- 8000a14:	0030      	movs	r0, r6
- 8000a16:	f001 fe17 	bl	8002648 <HAL_TIMEx_MasterConfigSynchronization>
- 8000a1a:	2800      	cmp	r0, #0
- 8000a1c:	d001      	beq.n	8000a22 <main+0x192>
- 8000a1e:	b672      	cpsid	i
- 8000a20:	e7fe      	b.n	8000a20 <main+0x190>
+ 8000962:	0001      	movs	r1, r0
+ 8000964:	2210      	movs	r2, #16
+ 8000966:	a807      	add	r0, sp, #28
+ 8000968:	f002 fa06 	bl	8002d78 <memset>
+ 800096c:	0032      	movs	r2, r6
+ 800096e:	0029      	movs	r1, r5
+ 8000970:	a804      	add	r0, sp, #16
+ 8000972:	f002 fa01 	bl	8002d78 <memset>
+ 8000976:	2380      	movs	r3, #128	; 0x80
+ 8000978:	4c32      	ldr	r4, [pc, #200]	; (8000a44 <main+0x1b4>)
+ 800097a:	05db      	lsls	r3, r3, #23
+ 800097c:	6023      	str	r3, [r4, #0]
+ 800097e:	2301      	movs	r3, #1
+ 8000980:	0020      	movs	r0, r4
+ 8000982:	425b      	negs	r3, r3
+ 8000984:	6065      	str	r5, [r4, #4]
+ 8000986:	60a5      	str	r5, [r4, #8]
+ 8000988:	60e3      	str	r3, [r4, #12]
+ 800098a:	6125      	str	r5, [r4, #16]
+ 800098c:	61a5      	str	r5, [r4, #24]
+ 800098e:	f001 fd81 	bl	8002494 <HAL_TIM_Base_Init>
+ 8000992:	2800      	cmp	r0, #0
+ 8000994:	d001      	beq.n	800099a <main+0x10a>
+ 8000996:	b672      	cpsid	i
+ 8000998:	e7fe      	b.n	8000998 <main+0x108>
+ 800099a:	2780      	movs	r7, #128	; 0x80
+ 800099c:	0020      	movs	r0, r4
+ 800099e:	017f      	lsls	r7, r7, #5
+ 80009a0:	a907      	add	r1, sp, #28
+ 80009a2:	9707      	str	r7, [sp, #28]
+ 80009a4:	f001 fdac 	bl	8002500 <HAL_TIM_ConfigClockSource>
+ 80009a8:	2800      	cmp	r0, #0
+ 80009aa:	d001      	beq.n	80009b0 <main+0x120>
+ 80009ac:	b672      	cpsid	i
+ 80009ae:	e7fe      	b.n	80009ae <main+0x11e>
+ 80009b0:	9004      	str	r0, [sp, #16]
+ 80009b2:	9006      	str	r0, [sp, #24]
+ 80009b4:	a904      	add	r1, sp, #16
+ 80009b6:	0020      	movs	r0, r4
+ 80009b8:	f001 fe46 	bl	8002648 <HAL_TIMEx_MasterConfigSynchronization>
+ 80009bc:	1e05      	subs	r5, r0, #0
+ 80009be:	d001      	beq.n	80009c4 <main+0x134>
+ 80009c0:	b672      	cpsid	i
+ 80009c2:	e7fe      	b.n	80009c2 <main+0x132>
+ 80009c4:	0001      	movs	r1, r0
+ 80009c6:	2210      	movs	r2, #16
+ 80009c8:	a807      	add	r0, sp, #28
+ 80009ca:	f002 f9d5 	bl	8002d78 <memset>
+ 80009ce:	0032      	movs	r2, r6
+ 80009d0:	0029      	movs	r1, r5
+ 80009d2:	a804      	add	r0, sp, #16
+ 80009d4:	f002 f9d0 	bl	8002d78 <memset>
+ 80009d8:	4e1b      	ldr	r6, [pc, #108]	; (8000a48 <main+0x1b8>)
+ 80009da:	4b1c      	ldr	r3, [pc, #112]	; (8000a4c <main+0x1bc>)
+ 80009dc:	0030      	movs	r0, r6
+ 80009de:	6033      	str	r3, [r6, #0]
+ 80009e0:	4b1b      	ldr	r3, [pc, #108]	; (8000a50 <main+0x1c0>)
+ 80009e2:	6075      	str	r5, [r6, #4]
+ 80009e4:	60b5      	str	r5, [r6, #8]
+ 80009e6:	60f3      	str	r3, [r6, #12]
+ 80009e8:	6135      	str	r5, [r6, #16]
+ 80009ea:	61b5      	str	r5, [r6, #24]
+ 80009ec:	f001 fd52 	bl	8002494 <HAL_TIM_Base_Init>
+ 80009f0:	2800      	cmp	r0, #0
+ 80009f2:	d001      	beq.n	80009f8 <main+0x168>
+ 80009f4:	b672      	cpsid	i
+ 80009f6:	e7fe      	b.n	80009f6 <main+0x166>
+ 80009f8:	0030      	movs	r0, r6
+ 80009fa:	a907      	add	r1, sp, #28
+ 80009fc:	9707      	str	r7, [sp, #28]
+ 80009fe:	f001 fd7f 	bl	8002500 <HAL_TIM_ConfigClockSource>
+ 8000a02:	2800      	cmp	r0, #0
+ 8000a04:	d001      	beq.n	8000a0a <main+0x17a>
+ 8000a06:	b672      	cpsid	i
+ 8000a08:	e7fe      	b.n	8000a08 <main+0x178>
+ 8000a0a:	9004      	str	r0, [sp, #16]
+ 8000a0c:	9006      	str	r0, [sp, #24]
+ 8000a0e:	a904      	add	r1, sp, #16
+ 8000a10:	0030      	movs	r0, r6
+ 8000a12:	f001 fe19 	bl	8002648 <HAL_TIMEx_MasterConfigSynchronization>
+ 8000a16:	2800      	cmp	r0, #0
+ 8000a18:	d001      	beq.n	8000a1e <main+0x18e>
+ 8000a1a:	b672      	cpsid	i
+ 8000a1c:	e7fe      	b.n	8000a1c <main+0x18c>
+ 8000a1e:	f7ff ff0b 	bl	8000838 <MX_I2C1_Init>
  8000a22:	2302      	movs	r3, #2
  8000a24:	6822      	ldr	r2, [r4, #0]
  8000a26:	425b      	negs	r3, r3

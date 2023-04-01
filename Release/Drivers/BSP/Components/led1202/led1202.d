@@ -2,8 +2,8 @@ Drivers/BSP/Components/led1202/led1202.o: \
  ../Drivers/BSP/Components/led1202/led1202.c \
  ../Drivers/BSP/Components/led1202/led1202.h \
  ../Drivers/BSP/Components/led1202/led1202_reg.h \
- C:/Users/shark/OneDrive/Documents/Python/Hack\ Kosice\ 2023/HackKosice23/Drivers/BSP/LED12A1/led12a1.h \
- C:/Users/shark/OneDrive/Documents/Python/Hack\ Kosice\ 2023/HackKosice23/Drivers/BSP/Components/led1202/led1202.h \
+ C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/LED12A1/led12a1.h \
+ C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/Components/led1202/led1202.h \
  ../Core/Inc/bsp_ip_conf.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
  ../Core/Inc/stm32g0xx_hal_conf.h \
@@ -40,8 +40,8 @@ Drivers/BSP/Components/led1202/led1202.o: \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h
 ../Drivers/BSP/Components/led1202/led1202.h:
 ../Drivers/BSP/Components/led1202/led1202_reg.h:
-C:/Users/shark/OneDrive/Documents/Python/Hack\ Kosice\ 2023/HackKosice23/Drivers/BSP/LED12A1/led12a1.h:
-C:/Users/shark/OneDrive/Documents/Python/Hack\ Kosice\ 2023/HackKosice23/Drivers/BSP/Components/led1202/led1202.h:
+C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/LED12A1/led12a1.h:
+C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/Components/led1202/led1202.h:
 ../Core/Inc/bsp_ip_conf.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:
 ../Core/Inc/stm32g0xx_hal_conf.h:

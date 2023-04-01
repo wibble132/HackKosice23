@@ -19,10 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-#include "mainApp.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "mainApp.h"
+
 #include <callbacks.h>
 #include <stdbool.h>
 #include "led12a1.h"
@@ -66,6 +66,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -104,9 +105,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-  MX_I2C1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   // mainApp.c
@@ -175,7 +176,7 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-void MX_I2C1_Init(void)
+static void MX_I2C1_Init(void)
 {
 
   /* USER CODE BEGIN I2C1_Init 0 */
