@@ -1,5 +1,6 @@
 
 #include "mainApp.h"
+#include "ledControl.h"
 
 #include "stm32g0xx_hal.h"
 #include <callbacks.h>
@@ -20,6 +21,8 @@ extern  uint8_t bridge_IN_buffer[];
 extern  uint8_t bridge_OUT_buffer[];
 extern volatile uint8_t command_triggered;
 extern   LED1202_Object_TypeDef LED1202Obj;
+
+#define LED_CURRENT 1
 
 void setup() {
 
@@ -47,6 +50,27 @@ void setup() {
 
 void mainLoop() {
 
+//	disableAllLED( &LED1202Obj, NumOfDev );
+//
+//	for (uint8_t x = 0; x < 4; ++x) {
+//		for (uint8_t y = 0; y < 4; ++y) {
+//			LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL<<1));
+//			setLED( &LED1202Obj, x, y, 10, 10, 10);
+//			HAL_Delay(100);
+//		}
+//	}
+//
+//	for (uint8_t x = 0; x < 4; ++x) {
+//		for (uint8_t y = 0; y < 4; ++y) {
+//			setLED( &LED1202Obj, x, y, 10, 10, 10);
+//			HAL_Delay(100);
+//		}
+//	}
+
+}
+
+void old_mainLoop() {
+
   uint16_t  digCurrReg = 0;
   uint8_t dev = 0;
   uint8_t cnt;
@@ -63,7 +87,7 @@ void mainLoop() {
 	  {
 		digCurrReg =  4095;
 		LED12A1_ChannelEnable( &LED1202Obj , (TypeDefChannel)(LED_CHANNEL_0<<channel),  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
-		LED12A1_AnalogDimming( &LED1202Obj , MAX_CH_CURRENT, channel,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
+		LED12A1_AnalogDimming( &LED1202Obj , LED_CURRENT, channel,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
 		LED12A1_DigitalDimming( &LED1202Obj ,&digCurrReg,channel,0,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
 		HAL_Delay(200);
 		LED12A1_ChannelDisable( &LED1202Obj , (TypeDefChannel)(LED_CHANNEL_0<<channel),  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
@@ -86,7 +110,7 @@ void mainLoop() {
 	  for (uint8_t channel = 0;channel<=11;channel++)
 	  {
 		LED12A1_ChannelEnable( &LED1202Obj , (TypeDefChannel)(LED_CHANNEL_0<<channel),  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
-		LED12A1_AnalogDimming( &LED1202Obj , MAX_CH_CURRENT, channel,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
+		LED12A1_AnalogDimming( &LED1202Obj , LED_CURRENT, channel,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
 	  }
 	}
 	HAL_Delay(300);
@@ -103,7 +127,7 @@ void mainLoop() {
 	  for (uint8_t channel = 0;channel<=11;channel++)
 	  {
 		LED12A1_ChannelEnable( &LED1202Obj , (TypeDefChannel)(LED_CHANNEL_0<<channel),  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
-		LED12A1_AnalogDimming( &LED1202Obj , MAX_CH_CURRENT, channel,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
+		LED12A1_AnalogDimming( &LED1202Obj , LED_CURRENT, channel,  (TypedefEnumDevAddr)(LED_DEVICE1+dev));
 		for(uint8_t cnt = 0;cnt<10;cnt++)
 		{
 		  digCurrReg =  400*cnt;

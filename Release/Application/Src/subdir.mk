@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Application/Src/MainApp.c 
+../Application/Src/MainApp.c \
+../Application/Src/ledControl.c 
 
 OBJS += \
-./Application/Src/MainApp.o 
+./Application/Src/MainApp.o \
+./Application/Src/ledControl.o 
 
 C_DEPS += \
-./Application/Src/MainApp.d 
+./Application/Src/MainApp.d \
+./Application/Src/ledControl.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Application/Src/%.o Application/Src/%.su Application/Src/%.cyclo: ../Application
 clean: clean-Application-2f-Src
 
 clean-Application-2f-Src:
-	-$(RM) ./Application/Src/MainApp.cyclo ./Application/Src/MainApp.d ./Application/Src/MainApp.o ./Application/Src/MainApp.su
+	-$(RM) ./Application/Src/MainApp.cyclo ./Application/Src/MainApp.d ./Application/Src/MainApp.o ./Application/Src/MainApp.su ./Application/Src/ledControl.cyclo ./Application/Src/ledControl.d ./Application/Src/ledControl.o ./Application/Src/ledControl.su
 
 .PHONY: clean-Application-2f-Src
 

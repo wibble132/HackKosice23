@@ -1,2 +1,3 @@
-MainApp.c:24:6:setup	2
-MainApp.c:50:6:mainLoop	12
+MainApp.c:27:6:setup	2
+MainApp.c:51:6:mainLoop	1
+MainApp.c:72:6:old_mainLoop	12
