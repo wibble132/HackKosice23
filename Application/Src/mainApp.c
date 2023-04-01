@@ -12,16 +12,16 @@
 #include "led12a1.h"
 
 
+
+uint8_t GuiMode = 0;
+uint8_t DevAddrArray[10];
+uint8_t NumOfDev = 0;
+extern  uint8_t bridge_IN_buffer[];
+extern  uint8_t bridge_OUT_buffer[];
+extern volatile uint8_t command_triggered;
+extern   LED1202_Object_TypeDef LED1202Obj;
+
 void mainApp_setup() {
-
-#ifndef GUI_MODE
-  uint16_t  digCurrReg = 0;
-  uint8_t dev = 0;
-  uint8_t cnt;
-#endif
-
-  __HAL_TIM_CLEAR_IT(&htim2,TIM_SR_UIF);
-  __HAL_TIM_CLEAR_IT(&htim3,TIM_SR_UIF);
 
   /*Wait Time assuring a properly steady state condition */
   HAL_Delay(100);
@@ -51,9 +51,10 @@ void mainApp_setup() {
 }
 
 void mainApp_mainLoop() {
-#ifdef GUI_MODE
-    WaitForCommand();
-#else
+
+  uint16_t  digCurrReg = 0;
+  uint8_t dev = 0;
+  uint8_t cnt;
 
 	/*** Turn ON LED one by one ****/
 	for (dev = 0;dev<NumOfDev;dev++)
@@ -118,5 +119,4 @@ void mainApp_mainLoop() {
 
 	  HAL_Delay(300);
 	}
-	#endif
 }

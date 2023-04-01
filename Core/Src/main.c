@@ -57,14 +57,7 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint8_t GuiMode = 0;
-uint8_t DevAddrArray[10];
-uint8_t NumOfDev = 0;
-extern  uint8_t bridge_IN_buffer[];
-extern  uint8_t bridge_OUT_buffer[];
 static void MX_USART2_UART_Init(void);
-extern volatile uint8_t command_triggered;
-extern   LED1202_Object_TypeDef LED1202Obj;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,6 +110,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // mainApp.c
+
+  __HAL_TIM_CLEAR_IT(&htim2,TIM_SR_UIF);
+  __HAL_TIM_CLEAR_IT(&htim3,TIM_SR_UIF);
   setup();
 
   /* USER CODE END 2 */
