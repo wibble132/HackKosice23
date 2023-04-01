@@ -52,25 +52,30 @@ void mainLoop() {
 
 	// initialise LEDs as all red
 	disableAllLED( &LED1202Obj, NumOfDev );
-	const int letters_buffer[27] = {0, 0, 0, 0, 14, 9,14, 8, 8, 8, 0, 6, 9, 2, 4, 9, 6, 0, 9, 9,14, 8, 8, 8, 0, 0, 0};
+	const int letters_buffer[27] = {0, 0, 0, 0, 7, 9, 7, 1, 1, 1, 0, 6, 9, 4, 2, 9, 6, 0, 9, 9, 7, 1, 1, 1, 0, 0, 0};
 //	const bool device3_buffer[27] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0};
 //	const bool device2_buffer[27] = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
 //	const bool device1_buffer[27] = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
 //	const bool device0_buffer[27] = {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0};
 
 	bool enabled_flag = false;
+
+	const Colour bright_white = make_colour(50, 50, 50);
+//	const Colour black = make_colour(0, 0, 0);
+
 	while (1) {
 		uint8_t t = 3;
 		while (t < 27) {
 			for (uint8_t x = 0; x < 4; ++x) {
 				for (uint8_t y = 0; y < 4; ++y) {
 					if (!enabled_flag) {
-						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+						enableLED(&LED1202Obj, y, x);
+//						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+//						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
+//						LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
 					}
 					if ((letters_buffer[t - y] >> x) & 1) {
-						setLED(&LED1202Obj, x, y, 50, 50, 50);
+						setLED(&LED1202Obj, y, x, bright_white);
 					}
 					else {
 						uint8_t r = 0;
@@ -91,7 +96,8 @@ void mainLoop() {
 							g = 0;
 							b = 27 - t;
 						}
-						setLED(&LED1202Obj, x, y, r, g, b);
+						Colour myCol = make_colour(r, g, b);
+						setLED(&LED1202Obj, x, y, myCol);
 					}
 				}
 			}
@@ -106,49 +112,50 @@ void mainLoop() {
 
 
 void task1_mainLoop() {
-	uint8_t t = 0;
-	while (t < 10) {
-		for (uint8_t x = 0; x < 4; ++x) {
-			for (uint8_t y = 0; y < 4; ++y) {
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				setLED(&LED1202Obj, x, y, 10 - t, t, 0);
+
+	while(1) {
+		uint8_t t = 0;
+
+		while (t < 10) { // (10, 0, 0) -> (0, 10, 0)
+			for (uint8_t x = 0; x < 4; ++x) {
+				for (uint8_t y = 0; y < 4; ++y) {
+					enableLED(&LED1202Obj, x, y);
+					Colour myCol = make_colour(10-t, t, 0);
+					setLED(&LED1202Obj, x, y, myCol);
+				}
 			}
+			HAL_Delay(20);
+			t++;
 		}
-		HAL_Delay(20);
-		t++;
-	}
-	while (t < 20) {
-		for (uint8_t x = 0; x < 4; ++x) {
-			for (uint8_t y = 0; y < 4; ++y) {
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				setLED(&LED1202Obj, x, y, 0, 20 - t, t - 10);
+		while (t < 20) { // (0, 10, 0) -> (0, 0, 10)
+			for (uint8_t x = 0; x < 4; ++x) {
+				for (uint8_t y = 0; y < 4; ++y) {
+					enableLED(&LED1202Obj, x, y);
+					Colour myCol = make_colour(0, 20-t, t-10);
+					setLED(&LED1202Obj, x, y, myCol);
+				}
 			}
+			HAL_Delay(20);
+			t++;
 		}
-		HAL_Delay(20);
-		t++;
-	}
-	while (t < 30) {
-		for (uint8_t x = 0; x < 4; ++x) {
-			for (uint8_t y = 0; y < 4; ++y) {
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+1)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				LED12A1_ChannelEnable( &LED1202Obj, (TypeDefChannel) (LED_CHANNEL_0<<(3*x+2)), (TypedefEnumDevAddr)(LED_DEVICE1 + y));
-				setLED(&LED1202Obj, x, y, t - 20, 0, 30 - t);
+		while (t < 30) { // (0, 0, 10) -> (10, 0, 0)
+			for (uint8_t x = 0; x < 4; ++x) {
+				for (uint8_t y = 0; y < 4; ++y) {
+					enableLED(&LED1202Obj, x, y);
+					Colour myCol = make_colour(t-20, 0, 30-t);
+					setLED(&LED1202Obj, x, y, myCol);
+				}
 			}
-		}
-		HAL_Delay(20);
-		t++;
-	}
-	for (uint8_t x = 0; x < 4; ++x) {
-		for (uint8_t y = 0; y < 4; ++y) {
-			setLED( &LED1202Obj, x, y, 0, 0, 0);
-			HAL_Delay(1000);
+			HAL_Delay(20);
+			t++;
 		}
 	}
+//	for (uint8_t x = 0; x < 4; ++x) {
+//		for (uint8_t y = 0; y < 4; ++y) {
+//			setLED( &LED1202Obj, x, y, black);
+//			HAL_Delay(1000);
+//		}
+//	}
 }
 
 void old_mainLoop() {
