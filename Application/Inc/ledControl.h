@@ -6,4 +6,6 @@
 
 void setLED(LED1202_Object_TypeDef* LED1202Obj, uint8_t x, uint8_t y, uint16_t r, uint16_t g, uint16_t b);
 
+void disableAllLED(LED1202_Object_TypeDef* LED1202Obj, uint8_t NumOfDev);
+
 #endif
