@@ -21,7 +21,7 @@ extern  uint8_t bridge_OUT_buffer[];
 extern volatile uint8_t command_triggered;
 extern   LED1202_Object_TypeDef LED1202Obj;
 
-void mainApp_setup() {
+void setup() {
 
   /*Wait Time assuring a properly steady state condition */
   HAL_Delay(100);
@@ -36,21 +36,16 @@ void mainApp_setup() {
 
   /*Scan for Number of available LED1202 ICs*/
   NumOfDev =  LED12A1_ScanAvailDevice( &LED1202Obj ,DevAddrArray);
-#ifdef GUI_MODE
-  HAL_UART_Receive_IT(&huart2,&bridge_OUT_buffer[0],64);
-#else
+
   /*Enable available LED1202 ICs*/
   for (uint8_t dev = 0;dev<NumOfDev;dev++)
   {
 	LED12A1_DeviceEnable(&LED1202Obj , (TypedefEnumDevAddr)(LED_DEVICE1 + dev));
 	LED12A1_ChannelDisable( &LED1202Obj , LED_CHANNEL_ALL , (TypedefEnumDevAddr)( LED_DEVICE1 + dev));
-
   }
-#endif
-
 }
 
-void mainApp_mainLoop() {
+void mainLoop() {
 
   uint16_t  digCurrReg = 0;
   uint8_t dev = 0;
