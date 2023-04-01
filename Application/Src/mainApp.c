@@ -12,7 +12,7 @@
 #include "led1202.h"
 #include "led12a1.h"
 
-
+#include "iks01a3_motion_sensors.h"
 
 uint8_t GuiMode = 0;
 uint8_t DevAddrArray[10];
@@ -50,6 +50,12 @@ void setup() {
 
 void mainLoop() {
 	task2();
+}
+
+void task3() {
+	// enable the motion sensor
+	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
+
 }
 
 void task2() {
