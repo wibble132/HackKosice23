@@ -13,6 +13,7 @@
 #include "led12a1.h"
 
 #include "iks01a3_motion_sensors.h"
+#include "iks01a3_conf.h"
 
 uint8_t GuiMode = 0;
 uint8_t DevAddrArray[10];
@@ -49,20 +50,114 @@ void setup() {
 }
 
 void mainLoop() {
-	task2();
+	task3();
 }
 
 void task3() {
+
+	const int HEIGHT = 6;
+	const int WIDTH = 4;
+
+	const int h = 3 * (HEIGHT + 1);
+	const int str_bsh[21][4] = {
+		{0, 0, 0, 0},
+		/*
+		 * Character b
+		 */
+		{1, 0, 0, 0},
+		{1, 0, 0, 0},
+		{1, 0, 0, 0},
+		{1, 1, 1, 0},
+		{1, 0, 0, 1},
+		{1, 1, 1, 0},
+
+		{0, 0, 0, 0},
+		/*
+		 * Character S
+		 */
+		{0, 1, 1, 0},
+		{1, 0, 0, 1},
+		{0, 1, 0, 0},
+		{0, 0, 1, 0},
+		{1, 0, 0, 1},
+		{0, 1, 1, 0},
+
+		{0, 0, 0, 0},
+		/*
+		 * Character h
+		 */
+		{1, 0, 0, 0},
+		{1, 0, 0, 1},
+		{1, 0, 0, 0},
+		{1, 1, 1, 0},
+		{1, 0, 0, 1},
+		{1, 0, 0, 1}
+	};
+
+
+
 	// enable the motion sensor
+	IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO);
 	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
 
+	int curr = 0; // where we are
+
+	while(true) {
+		IKS01A3_MOTION_SENSOR_Axes_t angular;
+		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &angular);
+
+		double gyro_x = angular.x / 1e4; // normalise the gyro data
+
+
+		// Cut off gyro_x at the bounds
+		if(gyro_x > 100)
+			gyro_x = 100;
+		if(gyro_x < -100)
+			gyro_x = -100;
+
+		// Set threshold for tilt
+		const double my_threshold = 30 * 100 / 180; // 30 degree threshold
+
+		if(gyro_x > my_threshold) {
+			curr = (curr + 1) % h;
+		}
+		else if(gyro_x < -my_threshold) {
+			curr = (curr - 1 + h) % h;
+		}
+
+		// display the letters on the screen
+		for(int x = 0; x < WIDTH; x++) {
+			for(int y = 0; y < WIDTH; y++) {
+				int my_x = (x + curr) % h;
+				enableLED(&LED1202Obj, my_x, y);
+				Colour my_col;
+
+				if(str_bsh[my_x][y] == 1) {
+					// We colour this white
+					my_col = make_colour(50, 50, 50);
+				}
+
+				if(0 <= my_x && my_x <= WIDTH) {
+					my_col = make_colour(14 - 2 * my_x, 2 * my_x, 0);
+				}
+				else if(WIDTH + 1 <= my_x && my_x <= 2 * (WIDTH+1)) {
+					my_col = make_colour(0, 28 - 2 * my_x, 2 * my_x - 14);
+				}
+				else if(2 * (WIDTH+1) <= my_x && my_x < 3 * (WIDTH+1)) {
+					my_col = make_colour(2 * my_x - 28, 0, 42 - 2 * my_x);
+				}
+
+				setLED(&LED1202Obj, x, y, my_col);
+			}
+		}
+	}
 }
 
 void task2() {
 
 	// initialise LEDs as all red
 	disableAllLED( &LED1202Obj, NumOfDev );
-	const int letters_buffer[27] = {0, 0, 0, 0, 7, 9, 7, 1, 1, 1, 0, 6, 9, 4, 2, 9, 6, 0, 9, 9, 7, 1, 1, 1, 0, 0, 0};
+	const int letters_buffer[27] =  {0, 0, 0, 0, 7, 9, 7, 1, 1, 1, 0, 6, 9, 4, 2, 9, 6, 0, 9, 9, 7, 1, 1, 1, 0, 0, 0};
 //	const bool device3_buffer[27] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0};
 //	const bool device2_buffer[27] = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
 //	const bool device1_buffer[27] = {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
