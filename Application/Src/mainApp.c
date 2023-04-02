@@ -52,28 +52,7 @@ void setup() {
 }
 
 void mainLoop() {
-//	disableAllLED(&LED1202Obj, 4);
-//	task2();
-//	Colour a = make_colour(10, 10, 10);
-//	Colour b = make_colour(10, 0, 5);
-//
-//	enableLED(&LED1202Obj, 0, 0);
-//	enableLED(&LED1202Obj, 1, 1);
-//
-//	setLED(&LED1202Obj, 0, 0, a);
-//	setLED(&LED1202Obj, 1, 1, b);
-//
-////    IKS01A3_ENV_SENSOR_Capabilities_t caps;
-////    int res = IKS01A3_ENV_SENSOR_Init(IKS01A3_HTS221_0, 2);
-//
-    enableLED(&LED1202Obj, 0, 1);
-    Colour c1 = make_colour(0, 0, 0);
-    setLED(&LED1202Obj, 0, 1, c1);
-//
-////    if (res == -1) {
-//    if(true) {
-//        enableLED(&LED1202Obj, 3, 3); setLED(&LED1202Obj, 3, 3, make_colour(10, 10, 10));
-//    }
+	task2();
 }
 
 
