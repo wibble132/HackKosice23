@@ -1,6 +1,6 @@
 Drivers/BSP/LED12A1/led12a1.o: ../Drivers/BSP/LED12A1/led12a1.c \
- C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/Components/led1202/led1202.h \
- C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/Components/led1202/led1202_reg.h \
+ C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/New\ folder/HackKosice23/Drivers/BSP/Components/led1202/led1202.h \
+ C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/New\ folder/HackKosice23/Drivers/BSP/Components/led1202/led1202_reg.h \
  ../Drivers/BSP/LED12A1/led12a1.h ../Core/Inc/bsp_ip_conf.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
  ../Core/Inc/stm32g0xx_hal_conf.h \
@@ -38,8 +38,8 @@ Drivers/BSP/LED12A1/led12a1.o: ../Drivers/BSP/LED12A1/led12a1.c \
  ../Core/Inc/led12a1_conf.h ../Core/Inc/main.h \
  ../Core/Inc/stm32g0xx_nucleo_bus.h ../Core/Inc/stm32g0xx_nucleo_conf.h \
  ../Core/Inc/stm32g0xx_nucleo_errno.h
-C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/Components/led1202/led1202.h:
-C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/HackKosice2023/Drivers/BSP/Components/led1202/led1202_reg.h:
+C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/New\ folder/HackKosice23/Drivers/BSP/Components/led1202/led1202.h:
+C:/Users/Dan/STM32CubeIDE/workspace_1.12.0/New\ folder/HackKosice23/Drivers/BSP/Components/led1202/led1202_reg.h:
 ../Drivers/BSP/LED12A1/led12a1.h:
 ../Core/Inc/bsp_ip_conf.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:

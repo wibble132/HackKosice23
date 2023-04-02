@@ -1,3 +1,4 @@
+"./Application/Src/datatypes.o"
 "./Application/Src/ledControl.o"
 "./Application/Src/mainApp.o"
 "./Core/Src/bridge.o"

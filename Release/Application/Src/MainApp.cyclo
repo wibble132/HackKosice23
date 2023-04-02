@@ -1,3 +1,6 @@
-mainApp.c:27:6:setup	2
-mainApp.c:51:6:mainLoop	5
-mainApp.c:74:6:old_mainLoop	12
+mainApp.c:30:6:setup	2
+mainApp.c:60:6:task3_4_5	12
+mainApp.c:202:6:task2	8
+mainApp.c:54:6:mainLoop	0
+mainApp.c:257:6:task1	6
+mainApp.c:291:6:old_mainLoop	12

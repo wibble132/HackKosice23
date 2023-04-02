@@ -1537,7 +1537,7 @@ static int32_t LSM6DSO_0_Probe(uint32_t Functions)
   io_ctx.ReadReg     = IKS01A3_I2C_ReadReg;
   io_ctx.WriteReg    = IKS01A3_I2C_WriteReg;
   io_ctx.GetTick     = IKS01A3_GetTick;
-  io_ctx.Delay       = IKS01A3_Delay;
+//  io_ctx.Delay       = IKS01A3_Delay;
 
   if (LSM6DSO_RegisterBusIO(&lsm6dso_obj_0, &io_ctx) != LSM6DSO_OK)
   {
@@ -1620,7 +1620,7 @@ static int32_t LIS2DW12_0_Probe(uint32_t Functions)
   io_ctx.ReadReg     = IKS01A3_I2C_ReadReg;
   io_ctx.WriteReg    = IKS01A3_I2C_WriteReg;
   io_ctx.GetTick     = IKS01A3_GetTick;
-  io_ctx.Delay       = IKS01A3_Delay;
+//  io_ctx.Delay       = IKS01A3_Delay;
 
   if (LIS2DW12_RegisterBusIO(&lis2dw12_obj_0, &io_ctx) != LIS2DW12_OK)
   {
@@ -1694,7 +1694,7 @@ static int32_t LIS2MDL_0_Probe(uint32_t Functions)
   io_ctx.ReadReg     = IKS01A3_I2C_ReadReg;
   io_ctx.WriteReg    = IKS01A3_I2C_WriteReg;
   io_ctx.GetTick     = IKS01A3_GetTick;
-  io_ctx.Delay       = IKS01A3_Delay;
+//  io_ctx.Delay       = IKS01A3_Delay;
 
   if (LIS2MDL_RegisterBusIO(&lis2mdl_obj_0, &io_ctx) != LIS2MDL_OK)
   {

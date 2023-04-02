@@ -1,3 +1,6 @@
-../Application/Src/mainApp.c:27:6:setup	16	static
-../Application/Src/mainApp.c:51:6:mainLoop	24	static
-../Application/Src/mainApp.c:72:6:old_mainLoop	24	static
+../Application/Src/mainApp.c:30:6:setup	16	static
+../Application/Src/mainApp.c:54:6:mainLoop	8	static
+../Application/Src/mainApp.c:60:6:task3_4_5	576	static
+../Application/Src/mainApp.c:202:6:task2	168	static
+../Application/Src/mainApp.c:257:6:task1	56	static
+../Application/Src/mainApp.c:291:6:old_mainLoop	24	static
