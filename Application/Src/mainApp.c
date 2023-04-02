@@ -115,9 +115,8 @@ void task4() {
 		}
 	}
 }
-}
 
-void task3() {
+void task3_4() {
 
 	const int HEIGHT = 6;
 	const int WIDTH = 4;
@@ -133,14 +132,14 @@ void task3() {
 		{0, 0, 0, 0},
 		{0, 0, 0, 0},
 		/*
-		 * Character b
+		 * Character h
 		 */
 		{1, 0, 0, 0},
 		{1, 0, 0, 0},
 		{1, 0, 0, 0},
 		{1, 1, 1, 0},
 		{1, 0, 0, 1},
-		{1, 1, 1, 0},
+		{1, 0, 0, 1},
 
 		{0, 0, 0, 0},
 		/*
@@ -155,14 +154,14 @@ void task3() {
 
 		{0, 0, 0, 0},
 		/*
-		 * Character h
+		 * Character b
 		 */
 		{1, 0, 0, 0},
-		{1, 0, 0, 1},
+		{1, 0, 0, 0},
 		{1, 0, 0, 0},
 		{1, 1, 1, 0},
 		{1, 0, 0, 1},
-		{1, 0, 0, 1}
+		{1, 1, 1, 0}
 	};
 
 
@@ -177,8 +176,14 @@ void task3() {
 		IKS01A3_MOTION_SENSOR_Axes_t angular;
 		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &angular);
 
-		double gyro_x = angular.x / 1e4; // normalise the gyro data
 
+		double gyro_x = (double)angular.x / 1e4; // normalise the gyro data
+		double lum_factor = (double)angular.y/(180 * 1e4);
+
+//		lum_factor = 2; // HARD CODE
+
+		uint16_t white_factor = (uint16_t)(50 * lum_factor);
+		const Colour bright_white = make_colour(white_factor, white_factor, white_factor);
 
 		// Cut off gyro_x at the bounds
 		if(gyro_x > 100)
@@ -186,8 +191,11 @@ void task3() {
 		if(gyro_x < -100)
 			gyro_x = -100;
 
+
 		// Set threshold for tilt
 		const double my_threshold = 30 * 100 / 180; // 30 degree threshold
+
+//		gyro_x = (my_threshold + 1); // HARD CODE
 
 		if(gyro_x > my_threshold) {
 			curr = (curr + 1) % h;
@@ -203,127 +211,29 @@ void task3() {
 				enableLED(&LED1202Obj, my_x, y);
 				Colour my_col;
 
+				int p = my_x % period;
+				int q = period - p;
+
 				if(str_bsh[my_x][y] == 1) {
 					// We colour this white
-					my_col = make_colour(50, 50, 50);
+					my_col = bright_white;
 				}
 
 				else if(0 <= my_x && my_x < period) {
-					my_col = make_colour(2 * (period - my_x), 2 * my_x, 0);
+					my_col = make_colour((uint16_t)(lum_factor * q), (uint16_t)(lum_factor * p), 0);
 				}
 				else if(period <= my_x && my_x <= 2 * period) {
-					my_col = make_colour(0, 4 * period - 2 * my_x, 2 * (my_x - period));
+					my_col = make_colour(0, (uint16_t)(lum_factor * q), (uint16_t)(lum_factor * p));
 				}
 				else if(2 * period <= my_x && my_x < 3 * period) {
-					my_col = make_colour(2 * my_x - 4 * period, 0, 6 * period - 2 * my_x);
+					my_col = make_colour((uint16_t)(lum_factor * p), (uint16_t)(lum_factor * q), 0);
 				}
 
-				setLED(&LED1202Obj, x, y, my_col);
+				setLED(&LED1202Obj, y, x, my_col);
 			}
 		}
 
 		HAL_Delay(200); // set the delay
-	}
-}
-
-
-void task3() {
-
-	const int HEIGHT = 6;
-	const int WIDTH = 4;
-
-	const int h = 3 * (HEIGHT + 1);
-	const int str_bsh[21][4] = {
-		{0, 0, 0, 0},
-		/*
-		 * Character b
-		 */
-		{1, 0, 0, 0},
-		{1, 0, 0, 0},
-		{1, 0, 0, 0},
-		{1, 1, 1, 0},
-		{1, 0, 0, 1},
-		{1, 1, 1, 0},
-
-		{0, 0, 0, 0},
-		/*
-		 * Character S
-		 */
-		{0, 1, 1, 0},
-		{1, 0, 0, 1},
-		{0, 1, 0, 0},
-		{0, 0, 1, 0},
-		{1, 0, 0, 1},
-		{0, 1, 1, 0},
-
-		{0, 0, 0, 0},
-		/*
-		 * Character h
-		 */
-		{1, 0, 0, 0},
-		{1, 0, 0, 1},
-		{1, 0, 0, 0},
-		{1, 1, 1, 0},
-		{1, 0, 0, 1},
-		{1, 0, 0, 1}
-	};
-
-
-
-	// enable the motion sensor
-	IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO);
-	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
-
-	int curr = 0; // where we are
-
-	while(true) {
-		IKS01A3_MOTION_SENSOR_Axes_t angular;
-		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &angular);
-
-		double gyro_x = angular.x / 1e4; // normalise the gyro data
-
-
-		// Cut off gyro_x at the bounds
-		if(gyro_x > 100)
-			gyro_x = 100;
-		if(gyro_x < -100)
-			gyro_x = -100;
-
-		// Set threshold for tilt
-		const double my_threshold = 30 * 100 / 180; // 30 degree threshold
-
-		if(gyro_x > my_threshold) {
-			curr = (curr + 1) % h;
-		}
-		else if(gyro_x < -my_threshold) {
-			curr = (curr - 1 + h) % h;
-		}
-
-		// display the letters on the screen
-		for(int x = 0; x < WIDTH; x++) {
-			for(int y = 0; y < WIDTH; y++) {
-				int my_x = (x + curr) % h;
-				enableLED(&LED1202Obj, my_x, y);
-				Colour my_col;
-
-				if(str_bsh[my_x][y] == 1) {
-					// We colour this white
-					my_col = make_colour(50, 50, 50);
-				}
-
-				else if(0 <= my_x && my_x <= WIDTH) {
-					my_col = make_colour(14 - 2 * my_x, 2 * my_x, 0);
-				}
-				else if(WIDTH + 1 <= my_x && my_x <= 2 * (WIDTH+1)) {
-					my_col = make_colour(0, 28 - 2 * my_x, 2 * my_x - 14);
-				}
-				else if(2 * (WIDTH+1) <= my_x && my_x < 3 * (WIDTH+1)) {
-					my_col = make_colour(2 * my_x - 28, 0, 42 - 2 * my_x);
-				}
-
-				setLED(&LED1202Obj, x, y, my_col);
-			}
-		}
 	}
 }
 
