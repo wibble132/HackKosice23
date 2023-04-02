@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include "led1202.h"
 #include "led12a1.h"
+#include <math.h>
 
 #include "iks01a3_motion_sensors.h"
 #include "iks01a3_conf.h"
@@ -24,6 +25,7 @@ extern volatile uint8_t command_triggered;
 extern   LED1202_Object_TypeDef LED1202Obj;
 
 #define LED_CURRENT 1
+#define square(x) x*x
 
 void setup() {
 
@@ -50,10 +52,33 @@ void setup() {
 }
 
 void mainLoop() {
-	task3_4();
+//	disableAllLED(&LED1202Obj, 4);
+//	task2();
+//	Colour a = make_colour(10, 10, 10);
+//	Colour b = make_colour(10, 0, 5);
+//
+//	enableLED(&LED1202Obj, 0, 0);
+//	enableLED(&LED1202Obj, 1, 1);
+//
+//	setLED(&LED1202Obj, 0, 0, a);
+//	setLED(&LED1202Obj, 1, 1, b);
+//
+////    IKS01A3_ENV_SENSOR_Capabilities_t caps;
+////    int res = IKS01A3_ENV_SENSOR_Init(IKS01A3_HTS221_0, 2);
+//
+    enableLED(&LED1202Obj, 0, 1);
+    Colour c1 = make_colour(0, 0, 0);
+    setLED(&LED1202Obj, 0, 1, c1);
+//
+////    if (res == -1) {
+//    if(true) {
+//        enableLED(&LED1202Obj, 3, 3); setLED(&LED1202Obj, 3, 3, make_colour(10, 10, 10));
+//    }
 }
 
-void task3_4() {
+
+
+void task3_4_5() {
 
 	const int HEIGHT = 6;
 	const int WIDTH = 4;
@@ -107,12 +132,16 @@ void task3_4() {
 	IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO);
 	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
 
+	// enable the accelerometer for purposes of Q5
+	IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_ACCELERO);
+	IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_ACCELERO);
+
 	int curr = 0; // where we are
+	bool turned_on = true;
 
 	while(true) {
 		IKS01A3_MOTION_SENSOR_Axes_t angular;
 		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &angular);
-
 
 		double gyro_x = (double)angular.x / 1e4; // normalise the gyro data
 		double lum_factor = (double)angular.y/(180 * 1e4);
@@ -132,13 +161,28 @@ void task3_4() {
 		// Set threshold for tilt
 		const double my_threshold = 30 * 100 / 180; // 30 degree threshold
 
-//		gyro_x = (my_threshold + 1); // HARD CODE
+//		gyro_x = -(my_threshold + 1); // HARD CODE
 
 		if(gyro_x > my_threshold) {
 			curr = (curr + 1) % h;
 		}
 		else if(gyro_x < -my_threshold) {
 			curr = (curr - 1 + h) % h;
+		}
+
+		// If we shake the device, then the screen should turn off.
+		IKS01A3_MOTION_SENSOR_Axes_t accelero;
+		IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_ACCELERO, &accelero);
+
+		int32_t acc_x = accelero.x / 10;
+		int32_t acc_y = accelero.y / 10;
+		int32_t acc_z = accelero.z / 10;
+
+		double real_acc = sqrt(square(acc_x) + square(acc_y) + square(acc_z));
+		double threshold = 10;
+
+		if(real_acc > threshold) {
+			turned_on = !turned_on;
 		}
 
 		// display the letters on the screen
@@ -166,7 +210,9 @@ void task3_4() {
 					my_col = make_colour((uint16_t)(lum_factor * p), (uint16_t)(lum_factor * q), 0);
 				}
 
-				setLED(&LED1202Obj, y, x, my_col);
+				if(turned_on) {
+					setLED(&LED1202Obj, y, x, my_col);
+				}
 			}
 		}
 
